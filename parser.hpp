@@ -7,14 +7,23 @@
 #include <sstream>
 #include <stdlib.h>
 #include <stdio.h>
+#include <vector>
+
+using namespace std;
 class Parser {
 private:
 	Parser();
 	int** 			_grid;
+	int**				_goal;
+	vector<string>	_parsedgrid;
 	int					_ac;
-	std::string _filename;
+	string 			_filename;
+	int					_rowCount;
 	int					_size;
 	Parser & operator=(Parser const & rhs);
+	void				checkNumSpaceOnly();
+	void				checkGrid();
+	int					countNumbers(string const& str);
 
 public:
 	Parser(int ac, char** av);
@@ -23,9 +32,5 @@ public:
 	int		getScore() const;
 	int** getGrid() const;
 	int		getSize() const;
-	class Bad_arg_number_exception : public std::exception
-	{
-		virtual const char* what() const throw();
-	};
 };
 #endif

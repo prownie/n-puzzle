@@ -9,7 +9,6 @@ int main(int ac, char** av) {
 		app.run();
 	}
 	catch (const std::exception& e) {
-		std::cout << "wtf" << std::endl;
 		std::cerr << e.what() << std::endl;
 		return EXIT_FAILURE;
 	}

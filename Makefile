@@ -25,10 +25,10 @@ FLAGS 		= 		-Wall -Wextra -Werror
 all:							$(NAME)
 
 %.o: %.c
-								g++ $(FLAGS) -c $< -o $@
+								clang++ $(FLAGS) -c $< -o $@
 
 $(NAME):				$(OBJS) Makefile
-								g++ $(FLAGS) $(OBJS) -o $(NAME)
+								clang++ $(FLAGS) $(OBJS) -o $(NAME)
 								@echo "\n\033[0;32m[npuzzle OK] \033[0m \033\n"
 
 clean:
