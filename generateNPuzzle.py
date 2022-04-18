@@ -33,7 +33,7 @@ if args.size < 3 or args.size > 100:
 	exit()
 
 #initialize the NPuzzle
-puzzle = range(0,args.size*args.size)
+puzzle = list(range(0,args.size*args.size))
 for i in range(1000):
 		puzzle = swapElements(puzzle, random.randint(0,args.size*args.size-1), random.randint(0,args.size*args.size-1))
 if args.unsolvable:

@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <vector>
+#include <iterator>
+#include <iomanip>
 
 using namespace std;
 class Parser {
@@ -24,7 +26,8 @@ private:
 	void				checkNumSpaceOnly();
 	void				checkGrid();
 	int					countNumbers(string const& str);
-
+	void	printGrid(int** toDisplay);
+	void	generateGoal();
 public:
 	Parser(int ac, char** av);
 	~Parser();

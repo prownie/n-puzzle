@@ -1,8 +1,10 @@
 #include "parser.hpp"
 
-Parser::Parser(int ac, char** av) : _ac(ac), _filename(string (av[1])), _rowCount(0) {
+Parser::Parser(int ac, char** av) : _ac(ac), _rowCount(0) {
+
 	if (_ac != 2)
 		throw invalid_argument("Wrong arg number, use ./npuzzle [Filename|SquareSize]");
+	 _filename = string (av[1]);
 	//2 case, either full filename, or number
 	//first case : only a number
 	ifstream file;
@@ -34,20 +36,59 @@ Parser::Parser(int ac, char** av) : _ac(ac), _filename(string (av[1])), _rowCoun
 					_rowCount++;
 				}
 			}
+			_size = _rowCount;
 		}
 	}
 	checkNumSpaceOnly();
 	checkGrid();
+	generateGoal();
+	printGrid(_grid);
+	cout << "-------------" << endl;
+	printGrid(_goal);
+}
+
+Parser::~Parser() {
+
+}
+
+void	Parser::printGrid(int** toDisplay) {
+	int normalizeCout = 0;
+	int max = _size * _size -1;
+	while (max != 0) {
+		max /= 10;
+	normalizeCout++;
+	}
 	for (int i =0; i<_rowCount;i++) {
 		for(int j=0;j<_rowCount;j++) {
-			cout << _grid[i][j] << "|";
+			cout << setw(normalizeCout) << toDisplay[i][j] << "|";
 		}
 		cout << endl;
 	}
 }
 
-Parser::~Parser() {
-
+void	Parser::generateGoal() {
+	int lastNumber = 1;
+	int up = 0,down = 0,left = 0,right = 0;
+	while (lastNumber <= _size * _size) {
+		for (int u = left; u < _size - right; u++)
+			_goal[up][u] = lastNumber++;
+		up++;
+		for (int r = up; r < _size - down; r++)
+			_goal[r][_size - right - 1] = lastNumber++;
+		right++;
+		for (int d = _size - right - 1; d >= left; d--)
+			_goal[_size - down - 1][d] = lastNumber++;
+		down++;
+		for (int l = _size - down - 1; l >= up; l--)
+			_goal[l][left] = lastNumber++;
+		left++;
+	}
+	for (int i =0; i<_rowCount;i++) {
+		for(int j=0;j<_rowCount;j++) {
+			if (_goal[i][j] == _size * _size)
+			_goal[i][j] = 0;
+		}
+	}
 }
 
 void	Parser::checkNumSpaceOnly() {
@@ -64,6 +105,7 @@ void	Parser::checkNumSpaceOnly() {
 
 void	Parser::checkGrid() {
 	_grid = new int*[_rowCount];
+	_goal = new int*[_rowCount];
 	int nbOfNumber =0;
 	stringstream currentLine;
 	for (int i =0;i < _rowCount ; i++) {
@@ -72,6 +114,7 @@ void	Parser::checkGrid() {
 		if (nbOfNumber != _rowCount)
 			throw invalid_argument("Not a square, wrong number of rows/columns");
 		_grid[i] = new int[nbOfNumber];
+		_goal[i] = new int[nbOfNumber];
 		for (int j =0; j<nbOfNumber; j++) {
 			currentLine >> _grid[i][j];
 		}
