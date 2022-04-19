@@ -42,9 +42,9 @@ Parser::Parser(int ac, char** av) : _ac(ac), _rowCount(0) {
 	checkNumSpaceOnly();
 	checkGrid();
 	generateGoal();
-	printGrid(_grid);
+	printGrid(_grid2d);
 	cout << "-------------" << endl;
-	printGrid(_goal);
+	printGrid(_goal2d);
 	checkSolvability();
 }
 
@@ -65,6 +65,7 @@ void	Parser::printGrid(int** toDisplay) {
 		}
 		cout << endl;
 	}
+	cout << endl;
 }
 
 void	Parser::generateGoal() {
@@ -72,24 +73,30 @@ void	Parser::generateGoal() {
 	int up = 0,down = 0,left = 0,right = 0;
 	while (lastNumber <= _size * _size) {
 		for (int u = left; u < _size - right; u++)
-			_goal[up][u] = lastNumber++;
+			_goal2d[up][u] = lastNumber++;
 		up++;
 		for (int r = up; r < _size - down; r++)
-			_goal[r][_size - right - 1] = lastNumber++;
+			_goal2d[r][_size - right - 1] = lastNumber++;
 		right++;
 		for (int d = _size - right - 1; d >= left; d--)
-			_goal[_size - down - 1][d] = lastNumber++;
+			_goal2d[_size - down - 1][d] = lastNumber++;
 		down++;
 		for (int l = _size - down - 1; l >= up; l--)
-			_goal[l][left] = lastNumber++;
+			_goal2d[l][left] = lastNumber++;
 		left++;
 	}
+	_goal = new int[_size*_size];
 	for (int i =0; i<_rowCount;i++) {
 		for(int j=0;j<_rowCount;j++) {
-			if (_goal[i][j] == _size * _size)
-			_goal[i][j] = 0;
+			if (_goal2d[i][j] == _size * _size)
+				_goal2d[i][j] = 0;
+			_goal[i * _size + j] = _goal2d[i][j];
 		}
 	}
+	cout << "1d goal array = " << endl;
+	for(int i = 0; i< _size*_size;i++)
+		cout << _goal[i] << " ";
+	cout << endl;
 }
 
 void	Parser::checkNumSpaceOnly() {
@@ -105,8 +112,8 @@ void	Parser::checkNumSpaceOnly() {
 }
 
 void	Parser::checkGrid() {
-	_grid = new int*[_rowCount];
-	_goal = new int*[_rowCount];
+	_grid2d = new int*[_rowCount];
+	_goal2d = new int*[_rowCount];
 	int nbOfNumber =0;
 	stringstream currentLine;
 	for (int i =0; i < _rowCount; i++) {
@@ -114,14 +121,26 @@ void	Parser::checkGrid() {
 		currentLine << _parsedgrid[i];
 		if (nbOfNumber != _rowCount)
 			throw invalid_argument("Not a square, wrong number of rows/columns");
-		_grid[i] = new int[nbOfNumber];
-		_goal[i] = new int[nbOfNumber];
+		_grid2d[i] = new int[nbOfNumber];
+		_goal2d[i] = new int[nbOfNumber];
 		for (int j =0; j<nbOfNumber; j++) {
-			currentLine >> _grid[i][j];
+			currentLine >> _grid2d[i][j];
 		}
 	}
 	if (_size != 0 && _rowCount != _size)
 		throw invalid_argument("Wrong number of rows");
+	_grid = new int[_size*_size];
+	for (int i =0; i<_rowCount;i++) {
+		for(int j=0;j<_rowCount;j++) {
+			if (_grid2d[i][j] == _size * _size)
+				_grid2d[i][j] = 0;
+			_grid[i * _size + j] = _grid2d[i][j];
+		}
+	}
+	cout << "1d grid array = " << endl;
+	for(int i = 0; i< _size*_size;i++)
+		cout << _grid[i] << " ";
+	cout << endl;
 }
 
 void Parser::checkSolvability() {
@@ -129,9 +148,9 @@ void Parser::checkSolvability() {
 	int inversions = 0;
 	int actualNumber;
 	for (int iterations = 0; iterations < _size * _size ; iterations++) {
-		actualNumber = _grid[iterations/_size][iterations%_size];
+		actualNumber = _grid2d[iterations/_size][iterations%_size];
 		for (int  i = iterations; i < _size * _size ; i++) {
-			if (actualNumber > _grid[i/_size][i%_size]) {
+			if (actualNumber > _grid2d[i/_size][i%_size]) {
 				inversions++;
 			}
 		}
@@ -151,7 +170,7 @@ int	Parser::countNumbers(string const& str) {
 }
 
 Parser::Parser(Parser const & src) {
-	_grid = src._grid;
+	_grid2d = src._grid2d;
 	_ac = src._ac;
 	_filename = src._filename;
 }

@@ -15,8 +15,10 @@ using namespace std;
 class Parser {
 private:
 	Parser();
-	int** 			_grid;
-	int**				_goal;
+	int** 			_grid2d;
+	int*				_grid;
+	int**				_goal2d;
+	int*				_goal;
 	vector<string>	_parsedgrid;
 	int					_ac;
 	string 			_filename;
@@ -39,13 +41,3 @@ public:
 	int		getSize() const;
 };
 #endif
-
-
-/*
-    0 1 2
-		_____
-0 | 7 1 3
-1 | 4 6 2
-2 | 5 8 0
-
-*/
