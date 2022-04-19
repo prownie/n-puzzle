@@ -13,6 +13,7 @@ def isSolvable(list):
 		for j in range(i+1,args.size*args.size):
 			if list[i] > list[j]:
 				inversions +=1
+	print("Number of inversions = " + str(inversions))
 	if inversions % 2 == 0:
 		return True
 	else:

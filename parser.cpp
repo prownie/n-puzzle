@@ -45,6 +45,7 @@ Parser::Parser(int ac, char** av) : _ac(ac), _rowCount(0) {
 	printGrid(_grid);
 	cout << "-------------" << endl;
 	printGrid(_goal);
+	checkSolvability();
 }
 
 Parser::~Parser() {
@@ -108,7 +109,7 @@ void	Parser::checkGrid() {
 	_goal = new int*[_rowCount];
 	int nbOfNumber =0;
 	stringstream currentLine;
-	for (int i =0;i < _rowCount ; i++) {
+	for (int i =0; i < _rowCount; i++) {
 		nbOfNumber = countNumbers(_parsedgrid[i]);
 		currentLine << _parsedgrid[i];
 		if (nbOfNumber != _rowCount)
@@ -121,6 +122,27 @@ void	Parser::checkGrid() {
 	}
 	if (_size != 0 && _rowCount != _size)
 		throw invalid_argument("Wrong number of rows");
+}
+
+void Parser::checkSolvability() {
+	stringstream currentLine;
+	int inversions = 0;
+	int actualNumber;
+	for (int iterations = 0; iterations < _size * _size ; iterations++) {
+		actualNumber = _grid[iterations/_size][iterations%_size];
+		for (int  i = iterations; i < _size * _size ; i++) {
+			if (actualNumber > _grid[i/_size][i%_size]) {
+				inversions++;
+			}
+		}
+	}
+	if (inversions % 2 == 1) {
+		stringstream rep;
+		rep << "This puzzle is unsolvable, it has ";
+		rep << inversions;
+		rep << " inverions.";
+		throw invalid_argument(rep.str());
+	}
 }
 
 int	Parser::countNumbers(string const& str) {

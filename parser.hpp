@@ -25,9 +25,11 @@ private:
 	Parser & operator=(Parser const & rhs);
 	void				checkNumSpaceOnly();
 	void				checkGrid();
+	void				checkSolvability();
 	int					countNumbers(string const& str);
 	void	printGrid(int** toDisplay);
 	void	generateGoal();
+
 public:
 	Parser(int ac, char** av);
 	~Parser();
@@ -37,3 +39,13 @@ public:
 	int		getSize() const;
 };
 #endif
+
+
+/*
+    0 1 2
+		_____
+0 | 7 1 3
+1 | 4 6 2
+2 | 5 8 0
+
+*/
