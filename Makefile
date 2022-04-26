@@ -11,11 +11,11 @@
 # **************************************************************************** #
 
 
-SRCS		= 		main.cpp node.cpp parser.cpp solver.cpp
+SRCS		= 		main.cpp neighbours.cpp state.cpp parser.cpp solver.cpp node.cpp
 OBJS		= 		${SRCS:.c=.o}
 NAME		= 		npuzzle
 RM			= 		rm -f
-FLAGS 		= 		-Wall -Wextra -Werror
+FLAGS 		= 	-Wall -Wextra -Werror
 #FLAGS		=		-g3 -fsanitize=address -Wall -Wextra -Werror -pthread
 
 # **************************************************************************** #
@@ -25,7 +25,7 @@ FLAGS 		= 		-Wall -Wextra -Werror
 all:							$(NAME)
 
 %.o: %.c
-								clang++ $(FLAGS) -c $< -o $@
+								clang++ -std=c++11 $(FLAGS) -c $< -o $@
 
 $(NAME):				$(OBJS) Makefile
 								clang++ $(FLAGS) $(OBJS) -o $(NAME)

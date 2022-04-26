@@ -24,7 +24,6 @@ private:
 	string 			_filename;
 	int					_rowCount;
 	int					_size;
-	Parser & operator=(Parser const & rhs);
 	void				checkNumSpaceOnly();
 	void				checkGrid();
 	void				checkSolvability();
@@ -33,11 +32,14 @@ private:
 	void	generateGoal();
 
 public:
+	Parser & operator=(Parser const & rhs);
 	Parser(int ac, char** av);
 	~Parser();
 	Parser(Parser const & src);
 	int		getScore() const;
 	int** getGrid() const;
 	int		getSize() const;
+	int		getIndexOfXInGoal(int x) const;
+	int*	getGoal() const;
 };
 #endif

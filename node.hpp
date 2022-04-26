@@ -6,32 +6,26 @@
 #include <algorithm>
 #include <sstream>
 #include <vector>
+#include "state.hpp"
 
+using namespace std;
 class Node {
 private:
 	Node();
-	int** _grid;
-	int		_h_score;
-	Node* _parent;
-	int 	_size;
-public:
-	Node(int** new_grid, int size);
-	~Node();
+	State	_state;
+	shared_ptr<Node> _parent;
+	int	_depth;
 	Node & operator=(Node const & rhs);
 	Node(Node const & src);
-	int		getScore() const;
-	int** getGrid() const;
-	int		getSize() const;
-	class Bad_arg_number_exception : public std::exception
-	{
-		virtual const char* what() const throw();
-	};
-	class Bad_size_arguments : public std::exception
-	{
-		virtual const char* what() const throw();
-	};
+public:
+	Node(const State& currentStage, shared_ptr<Node> parent, int depth = 0);
+	~Node();
+	void	setParent(Node* node);
+	void	setParent(shared_ptr<Node> node);
+	const shared_ptr<Node> getParent();
+	const shared_ptr<Node> getParent() const;
+	const State& getState() const;
+	int getDepth() const;
 };
-
-std::ostream & operator<<(std::ostream& o, Node const & b);
 
 #endif

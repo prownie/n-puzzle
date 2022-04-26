@@ -175,6 +175,12 @@ Parser::Parser(Parser const & src) {
 	_filename = src._filename;
 }
 
+int Parser::getIndexOfXInGoal(int x) const {
+	for (int i = 0; i < _size * _size; i++)
+		if (_goal[i] == x) return i;
+	return _size * _size; //shouldn't happen
+}
+int*	Parser::getGoal() const {return _goal;}
 // char const * Parser::File_not_found_exception::what( void ) const throw()
 // {
 // 	return "File '" + _size*_size-1 + "Puzzle.txt' not found";
