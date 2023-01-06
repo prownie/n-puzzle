@@ -15,7 +15,7 @@ if __name__ == "__main__":
 	# goal and puzzleParsed are stored as Tuples, to be usable in dictionnary
 	puzzleParsed = parseArguments(args)
 	goal = generateGoal(puzzleParsed)
-	goal = (1,2,3,4,5,6,7,8,0)
+	# goal = (1,2,3,4,5,6,7,8,0)
 	path = aStar(puzzleParsed, goal, "ManhattanDistance")
 	for toto in path:
 		print(toto)

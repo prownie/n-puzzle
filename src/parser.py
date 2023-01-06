@@ -1,4 +1,4 @@
-import sys, string, math, heapq
+import sys, string, math
 from generateNPuzzle import generatePuzzle, isListSolvable
 
 def checkInputValidity(file):
