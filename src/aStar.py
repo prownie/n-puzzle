@@ -18,8 +18,9 @@ def cellMovement(cell, drow, dcol, size):
                 return tuple(newCell)
     return tuple(newCell)
 
+
+
 def aStar(grid, goal, heuristic):
-	start_time = time.perf_counter()
 	size = int(sqrt(len(grid)))
 	# tuple of tile : (totalcost, cost, current, parrent)
 	# totalcost: total cost of nodes, moves + heuristic
@@ -29,7 +30,7 @@ def aStar(grid, goal, heuristic):
 	DIRECTIONS = {(1, 0), (-1, 0), (0, 1), (0, -1)}
 	opened = [(0,0,grid,None)]
 	heapq.heapify(opened)
-	closed = {grid: None} #closed grid linked to parent
+	hash_close = {} # définir hash_close comme un dictionnaire vide
 	match heuristic:
 		case "ManhattanDistance":
 			heuristicFunction = manhattanDistance
@@ -41,33 +42,48 @@ def aStar(grid, goal, heuristic):
 			print("no heuristic chosen")
 
 	total_time = 0
+	start_time = time.perf_counter()
 	while(opened != []):
+		# print("closed = ",len(hash_close))
+		# print("opened = ",len(opened))
 		_, moves, cell, parent = heapq.heappop(opened)
-
-    # afficher le temps total d'exécution en secondes
 		if (cell == goal):
 			print("FOUND")
+			# 4.3 secondes pour un 4x4
 			reversedPath = [cell]
 			cell = parent
 			while cell is not None:
 				reversedPath.append(cell)
-				cell = closed[cell]
+				cell = hash_close[cell] # utiliser hash_close au lieu de closed
 			end_time = time.perf_counter()
-			# ajouter le temps d'exécution de cette itération à la variable total_time
 			total_time += end_time - start_time
 			print(f"Temps total d'exécution de la ligne de code spécifique : {total_time:.6f} secondes")
 			return reversed(reversedPath)
-		print("Hello")
+		# print("Hello")
 		for drow, dcol in DIRECTIONS:
-			print("drow:", drow)
-			print("dcol:", dcol)
-			newCell = cellMovement(cell,drow,dcol,size)
-			if newCell in closed or newCell == cell:
+
+			# start_time = time.perf_counter()
+
+			newCell = cellMovement(cell,drow,dcol,size) # 2.36 secondes 4x4
+
+			# end_time = time.perf_counter()
+			# total_time += end_time - start_time
+			# print(f"Temps total d'exécution de la ligne de code spécifique : {total_time:.6f} secondes")
+
+			if newCell in hash_close or newCell == cell: # utiliser hash_close au lieu de closed
 				continue
-			heuristicCost = heuristicFunction(newCell,goal,size) 
-			# print("potential new cell: ", newCell," with a cost of: ", heuristicCost, " and cell is :", cell)
+
+			# start_time = time.perf_counter()
+
+			heuristicCost = heuristicFunction(newCell,goal,size) # 0.67 secondes 4x4
+
+			# end_time = time.perf_counter()
+			# total_time += end_time - start_time
+			# print(f"Temps total d'exécution de la ligne de code spécifique : {total_time:.6f} secondes")
 			heapq.heappush(opened,(moves+heuristicCost,moves+1,newCell,cell))
-			closed[cell] = parent
-	# print(len(opened))
+			hash_close[cell] = parent # utiliser hash_close au lieu de closed
+
+	# ajouter le hash du "close" ici
+	hash_close = hash(frozenset(hash_close.items())) # hasher les items du dictionnaire hash_close
 	print("Aster failed for whateverReason")
 	return None
