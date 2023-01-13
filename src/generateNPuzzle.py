@@ -47,71 +47,50 @@ def swapElements(list, pos1, pos2):
 # 	return inversions
 
 def isSolvable(list, args):
-	goal = (1,2,3,8,0,4,7,6,5)
-	# print(goal)
-	# list = (0,2,3,1,6,4,8,7,5)
-	i = 0
-	inversions = 0
-	while i < len(list):
-		indexInGoal = goal.index(list[i])
-		if list[i] == 0:
-			i += 1
-			continue
-		j = i + 1
-		while j < len(list):
-			z = indexInGoal
-			if list[j] == 0:
-				j += 1
-				continue
-			while z >= 0:
-				if list[z] == 0:
-					z -= 1
-					continue
-				if goal[z] == list[j]:
-					inversions += 1
-					break
-				z -= 1
-			# print("inversions = " + str(inversions))
-			# print("list[i] = " + str(list[i]))
-			j += 1
-		i += 1
-	if inversions % 2 == 0:
-		return True
-	else:
-		return False
+    goal = generateGoal(list)
+    # initialiser le compteur d'inversions à 0
+    inversions = 0
+    # pour chaque élément i dans la liste donnée
+    for i in range(len(list)):
+        # trouver l'index de l'élément i dans la liste de but
+        index_i = goal.index(list[i])
+        # pour chaque élément j dans la liste donnée qui se trouve après i
+        for j in range(i+1, len(list)):
+            # trouver l'index de l'élément j dans la liste de but
+            index_j = goal.index(list[j])
+            # si l'index de i est plus grand que l'index de j et les deux éléments ne sont pas de 0
+            if index_i > index_j and list[i] != 0 and list[j] != 0:
+                # incrémenter le compteur d'inversions
+                inversions += 1
+    # afficher le nombre d'inversions
+    print("Number of inversions = " + str(inversions))
+    # retourner le nombre d'inversions
+    if inversions % 2 == 0:
+        return True
+    else:
+        return False
 
 def isListSolvable(list):
-	goal = (1,2,3,8,0,4,7,6,5)
-	# print(goal)
-	# list = (0,2,3,1,6,4,8,7,5)
-	i = 0
-	inversions = 0
-	while i < len(list):
-		indexInGoal = goal.index(list[i])
-		if list[i] == 0:
-			i += 1
-			continue
-		j = i + 1
-		while j < len(list):
-			z = indexInGoal
-			if list[j] == 0:
-				j += 1
-				continue
-			while z >= 0:
-				if list[z] == 0:
-					z -= 1
-					continue
-				if goal[z] == list[j]:
-					inversions += 1
-					break
-				z -= 1
-			# print("inversions = " + str(inversions))
-			# print("list[i] = " + str(list[i]))
-			j += 1
-		i += 1
-	print(list)
-	print("Number of inversions = " + str(inversions))
-	return inversions
+    goal = generateGoal(list)
+    # initialiser le compteur d'inversions à 0
+    inversions = 0
+    # pour chaque élément i dans la liste donnée
+    for i in range(len(list)):
+        # trouver l'index de l'élément i dans la liste de but
+        index_i = goal.index(list[i])
+        # pour chaque élément j dans la liste donnée qui se trouve après i
+        for j in range(i+1, len(list)):
+            # trouver l'index de l'élément j dans la liste de but
+            index_j = goal.index(list[j])
+            # si l'index de i est plus grand que l'index de j et les deux éléments ne sont pas de 0
+            if index_i > index_j and list[i] != 0 and list[j] != 0:
+                # incrémenter le compteur d'inversions
+                inversions += 1
+    # afficher le nombre d'inversions
+    print("Number of inversions = " + str(inversions))
+    # retourner le nombre d'inversions
+    return inversions
+
 
 		
 #initialize the NPuzzle

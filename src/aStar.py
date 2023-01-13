@@ -93,8 +93,9 @@ def aStar(grid, goal, heuristic):
 	start_time = time.perf_counter()
 	print(goal)
 	while(opened != []):
-		# print("closed = ",len(hash_close))
-		# print("opened = ",len(opened))
+		# si c'est un modulo de 100000
+		# if (len(opened) % 100000 == 0):
+		# 	print("closed = ",len(opened))
 		_, moves, cell, parent = heapq.heappop(opened)
 		# if (len(opened) < 100):
 		# 	print("opened = ",opened)
