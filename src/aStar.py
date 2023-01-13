@@ -58,20 +58,17 @@ def cellMovement(cell, drow, dcol, size):
 	newCell = list(cell)
 	index = newCell.index(0)
 	newIndex = index + drow * size + dcol
-	# print("cell = ",cell)
-	# print("index = ",index)
-	# print("newIndex = ",newIndex)
-	# print("drow = ",drow)
-	# print("dcol = ",dcol)
-	# print("newIndex = ",newIndex)
-	# # print("newCell[newIndex] = ",newCell[newIndex])
-	# print("\n")
 	if (drow != 0 and newIndex >= 0 and newIndex < size * size) or (dcol != 0 and (dcol == -1 and index % size != 0) or (dcol == 1 and (index + 1) % size != 0)):
+	# if (newIndex <= size * size - 1 and newIndex >= 0):
 		# print("drow = ",drow)
 		# print("dcol = ",dcol)
 		# print("newIndex = ",newIndex)
 		# print("\n")
+		# print("cell = ",cell)
 		newCell[index], newCell[newIndex] = newCell[newIndex], newCell[index]
+		# print("newCell = ",newCell)
+		# print ("newCell = ",newCell)
+
 		return tuple(newCell)
 	return tuple(newCell)
 
@@ -94,10 +91,13 @@ def aStar(grid, goal, heuristic):
 
 	total_time = 0
 	start_time = time.perf_counter()
+	print(goal)
 	while(opened != []):
 		# print("closed = ",len(hash_close))
 		# print("opened = ",len(opened))
 		_, moves, cell, parent = heapq.heappop(opened)
+		# if (len(opened) < 100):
+		# 	print("opened = ",opened)
 		if (cell == goal):
 			print("FOUND")
 			# 0.055 secondes pour un 4x4
@@ -111,7 +111,11 @@ def aStar(grid, goal, heuristic):
 			print(f"Temps total d'exécution de la ligne de code spécifique : {total_time:.6f} secondes")
 			return reversed(reversedPath)
 		# print("Hello")
+		# print("\n\n")
+		# print("cell = ",cell)
 		for drow, dcol in DIRECTIONS:
+			# print ("drow = ",drow)
+			# print ("dcol = ",dcol)
 			# start_time = time.perf_counter()
 
 			newCell = cellMovement(cell,drow,dcol,size) # 1.75 secondes 4x4
@@ -121,21 +125,22 @@ def aStar(grid, goal, heuristic):
 			# print(f"Temps total d'exécution de la ligne de code spécifique : {total_time:.6f} secondes")
 
 			if  newCell == cell or newCell in hash_close: # utiliser hash_close au lieu de closed
+				# print("continue")
 				continue
-			else :
+			# else :
 
 				# start_time = time.perf_counter()
 
-				heuristicCost = heuristicFunction(newCell,goal,size) # 0.67 secondes 4x4
+			heuristicCost = heuristicFunction(newCell,goal,size) # 0.67 secondes 4x4
 				# end_time = time.perf_counter()
 				# total_time += end_time - start_time
 				# print(f"Temps total d'exécution de la ligne de code spécifique : {total_time:.6f} secondes")
 
-				heapq.heappush(opened,(moves+heuristicCost,moves+1,newCell,cell))
-				hash_close[cell] = parent # utiliser hash_close au lieu de closed
+			heapq.heappush(opened,(moves+heuristicCost,moves+1,newCell,cell))
+		hash_close[cell] = parent # utiliser hash_close au lieu de closed
 
 	# ajouter le hash du "close" ici
-	print(hash_close)
+	print(len(hash_close))
 	hash_close = hash(frozenset(hash_close.items())) # hasher les items du dictionnaire hash_close
 	print("Aster failed for whateverReason")
 	return None
