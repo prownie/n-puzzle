@@ -1,34 +1,28 @@
 import math
 #Distance for each tile to goal placement
+
 def manhattanDistance(grid, goal, size, memo={}):
     # Vérification de la présence du coût de Manhattan de la grille dans le dictionnaire de mémoïsation
     if grid in memo:
         return memo[grid]
     
-    # Précalcul des coordonnées de chaque tuile dans la grille goal
-    goal_coords = {}
-    for index in range(0, size * size):
-        tile = goal[index]
-        row = index // size
-        col = index % size
-        goal_coords[tile] = (row, col)
-    
     # Calcul du coût de Manhattan
     cost = 0
+    goal_pos = [0] * (size*size)
+    for i in range(size*size):
+        goal_pos[goal[i]] = i
     for index in range(0, size * size):
         if (grid[index] == 0):
             continue
-        row = index // size
-        col = index % size
-        tile = grid[index]
-        goal_row, goal_col = goal_coords[tile]
+        row = index % size
+        col = index // size
+        goal_row, goal_col = goal_pos[grid[index]] % size, goal_pos[grid[index]] // size
         cost += abs(goal_row - row) + abs(goal_col - col)
     
     # Ajout du coût de Manhattan de la grille au dictionnaire de mémoïsation
     memo[grid] = cost
     
     return cost
-
 
 	
 def manhattanDistanceLinearConflict(grid, goal, size):
