@@ -20,3 +20,10 @@ if __name__ == "__main__":
 	path = aStar(puzzleParsed, goal, "ManhattanDistance")
 	for toto in path:
 		print(toto)
+	# path = aStar(puzzleParsed, goal, "ManhattanDistanceLinearConflict")
+	# for toto in path:
+	# 	print(toto)
+	# path = aStar(puzzleParsed, goal, "MisplacedTiles")
+	# for toto in path:
+	# 	print(toto)
+	

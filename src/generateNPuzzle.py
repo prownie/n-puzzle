@@ -9,43 +9,6 @@ def swapElements(list, pos1, pos2):
 
 
 
-# for(int i =0; i<len(puzzle);i++) {
-#     int indexInGoal = indexOfNombreInGoal(puzzle[i])
-#     if puzzle[i] == 0
-#         continue;
-#     for (int j = i+1<len(puzzle);j++) {
-#         for (int z = indexInGoal; z>=0;z--) {
-#             if(puzzle[z] == puzzle[j]){
-#                 inversions++
-#                 break;
-#             }
-#         }
-#     }
-# }
-
-
-# #check if puzzle is solvable
-# def isSolvable(list, args):
-# 	inversions = 0
-# 	for i in range(int(args.input)*int(args.input)-1):
-# 		for j in range(i+1,int(args.input)*int(args.input)):
-# 			if list[i] > list[j]:
-# 				inversions +=1
-# 	# print("Number of inversions = " + str(inversions))
-# 	if inversions % 2 == 0:
-# 		return True
-# 	else:
-# 		return False
-
-# def isListSolvable(list):
-# 	inversions = 0
-# 	puzzleSize = int(sqrt(len(list)))
-# 	for i in range(puzzleSize*puzzleSize-1):
-# 		for j in range(i+1,puzzleSize*puzzleSize):
-# 			if list[i] > list[j]:
-# 				inversions +=1
-# 	return inversions
-
 def isSolvable(list, args):
     goal = generateGoal(list)
     # initialiser le compteur d'inversions à 0
