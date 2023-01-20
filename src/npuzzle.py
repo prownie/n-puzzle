@@ -2,6 +2,8 @@ import sys, argparse, heapq
 from parser import parseArguments
 from generateNPuzzle import generateGoal
 from aStar import aStar
+# from printAnswer import printResult
+from printAnswer import ResultPrinter
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(prog='Npuzzle Solver')
 	parser.add_argument("input", type=str, help="input puzzle file, or specify a size if you want a random generated puzzle")
@@ -20,3 +22,5 @@ if __name__ == "__main__":
 	path = aStar(puzzleParsed, goal, "ManhattanDistance")
 	for toto in path:
 		print(toto)
+	# printResult(path)
+	ResultPrinter(path)

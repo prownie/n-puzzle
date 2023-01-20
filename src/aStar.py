@@ -110,7 +110,7 @@ def aStar(grid, goal, heuristic):
 			end_time = time.perf_counter()
 			total_time += end_time - start_time
 			print(f"Temps total d'exécution de la ligne de code spécifique : {total_time:.6f} secondes")
-			return reversed(reversedPath)
+			return list(reversed(reversedPath))
 		# print("Hello")
 		# print("\n\n")
 		# print("cell = ",cell)
