@@ -22,5 +22,4 @@ if __name__ == "__main__":
 	path = aStar(puzzleParsed, goal, "ManhattanDistance")
 	for toto in path:
 		print(toto)
-	# printResult(path)
 	ResultPrinter(path)
