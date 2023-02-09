@@ -49,11 +49,20 @@ def parseArguments(args):
 		else:
 			generatePuzzle(args)
 			args.input = str(args.input)+"-puzzle.txt"
-			
+	if args.ManhattanDistance:
+		heuristic = "ManhattanDistance"
+	elif args.ManhattanDistanceLinearConflict:
+		heuristic = "ManhattanDistanceLinearConflict"
+	elif args.MisplacedTiles:
+		heuristic = "MisplacedTiles"
+	else:
+		print ("You need to chose any heuristics functions, see --help for more informations")
+		sys.exit(1)
+
 	# file = open(args.input)
 	try:
 		file = open(args.input)
-		return checkInputValidity(file.read())
+		return (heuristic,checkInputValidity(file.read()))
 	except FileNotFoundError:
 		print("Input file not found")
 		sys.exit(1)
