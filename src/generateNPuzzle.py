@@ -11,23 +11,14 @@ def swapElements(list, pos1, pos2):
 
 def isSolvable(list, args):
     goal = generateGoal(list)
-    # initialiser le compteur d'inversions à 0
     inversions = 0
-    # pour chaque élément i dans la liste donnée
     for i in range(len(list)):
-        # trouver l'index de l'élément i dans la liste de but
         index_i = goal.index(list[i])
-        # pour chaque élément j dans la liste donnée qui se trouve après i
         for j in range(i+1, len(list)):
-            # trouver l'index de l'élément j dans la liste de but
             index_j = goal.index(list[j])
-            # si l'index de i est plus grand que l'index de j et les deux éléments ne sont pas de 0
             if index_i > index_j and list[i] != 0 and list[j] != 0:
-                # incrémenter le compteur d'inversions
                 inversions += 1
-    # afficher le nombre d'inversions
-    print("Number of inversions = " + str(inversions))
-    # retourner le nombre d'inversions
+    # print("Number of inversions = " + str(inversions))
     if inversions % 2 == 0:
         return True
     else:
@@ -35,23 +26,14 @@ def isSolvable(list, args):
 
 def isListSolvable(list):
     goal = generateGoal(list)
-    # initialiser le compteur d'inversions à 0
     inversions = 0
-    # pour chaque élément i dans la liste donnée
     for i in range(len(list)):
-        # trouver l'index de l'élément i dans la liste de but
         index_i = goal.index(list[i])
-        # pour chaque élément j dans la liste donnée qui se trouve après i
         for j in range(i+1, len(list)):
-            # trouver l'index de l'élément j dans la liste de but
             index_j = goal.index(list[j])
-            # si l'index de i est plus grand que l'index de j et les deux éléments ne sont pas de 0
             if index_i > index_j and list[i] != 0 and list[j] != 0:
-                # incrémenter le compteur d'inversions
                 inversions += 1
-    # afficher le nombre d'inversions
-    print("Number of inversions = " + str(inversions))
-    # retourner le nombre d'inversions
+    # print("Number of inversions = " + str(inversions))
     return inversions
 
 

@@ -56,13 +56,6 @@ def aStar(grid, goal, heuristic):
 			print("closed = ", len(hash_close))
 			print("opened = ", len(opened))
 			print("path len = ", len(reversedPath))
-			print("time in heuristic = ",timeInHeuristic)
-			print("time in cell movement = ",timeInCellMovement)
-			print("time in check hash_close before directions = ",timeInCheckCloseBeforeDirection)
-			print("time in check close = ",timeInCheckClose)
-			
-			print(f"time spent in heuristic : {timeInHeuristic/total_time*100:.2f} %")
-			print(f"time spent in cell movement : {timeInCellMovement/total_time*100:.2f} %")
 			return list(reversed(reversedPath))
 
 		startCheckCloseBeforeDirection = time.perf_counter()

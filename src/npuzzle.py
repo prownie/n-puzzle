@@ -20,4 +20,6 @@ if __name__ == "__main__":
 	# goal = (1,2,3,4,5,6,7,8,0)
 	
 	path = aStar(puzzleParsed, goal, heuristic)
-	# ResultPrinter(path)
+	for board in path:
+		print(board)
+	ResultPrinter(path)
